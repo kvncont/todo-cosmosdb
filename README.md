@@ -1,4 +1,5 @@
 # ToDo Cosmos DB
+Proyecto CRUD para probar las funcionalidades de CosmosDB
 
 ## Paso 1: Creación Cosmos DB
 Seguir la guía de microsoft para crear un base de datos [Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/create-cosmosdb-resources-portal)
