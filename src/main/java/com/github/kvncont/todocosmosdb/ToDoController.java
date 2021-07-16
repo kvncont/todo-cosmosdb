@@ -20,7 +20,7 @@ public class ToDoController {
     private ToDoRepository toDoRepository;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity saveToDo(@Valid @RequestBody ToDo toDo){
+    public ResponseEntity createToDo(@Valid @RequestBody ToDo toDo){
         ToDo savedToDo = toDoRepository.save(toDo);
         final Optional<ToDo> result = toDoRepository.findById(toDo.getId());
 
@@ -48,11 +48,13 @@ public class ToDoController {
         Optional<ToDo> currentToDo = toDoRepository.findById(toDo.getId());
 
         ToDo updatingToDo = new ToDo();
+        updatingToDo.setId(toDo.getId());
         updatingToDo.setUserId(toDo.getUserId());
         updatingToDo.setUsername(toDo.getUsername());
         updatingToDo.setDescription(toDo.getDescription());
         updatingToDo.setCompleted(toDo.isCompleted());
-        if (currentToDo != null)
+
+        if (!currentToDo.isEmpty())
             toDoRepository.delete(currentToDo.get());
 
         ToDo result = toDoRepository.save(updatingToDo);
@@ -61,13 +63,13 @@ public class ToDoController {
     }
 
     @DeleteMapping(value = "/{toDoId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity deleteItemById(@PathVariable String toDoId){
+    public ResponseEntity deleteToDoById(@PathVariable String toDoId){
         String message = "{\"message\": \"ToDo no se encuentra\"}";
         HttpStatus status = HttpStatus.NOT_FOUND;
 
-        Optional<ToDo> currentToDo = toDoRepository.findById(toDoId).or(null);
+        Optional<ToDo> currentToDo = toDoRepository.findById(toDoId);
 
-        if (currentToDo != null) {
+        if (!currentToDo.isEmpty()) {
             System.out.println("Si Entro Inicio..........");
             message = "{\"message\": \"ToDo borrado exitosamente\"}";
             toDoRepository.delete(currentToDo.get());
@@ -78,5 +80,9 @@ public class ToDoController {
         return new ResponseEntity(message, status);
     }
 
-    // Delete All
+    @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity deleteAllToDo() {
+        toDoRepository.deleteAll();
+        return new ResponseEntity("{\"message\":\"Todos los items se han eliminado\"}", HttpStatus.OK);
+    }
 }

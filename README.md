@@ -57,8 +57,8 @@ URL:
 
 
 ## Tareas pendientes:
-- [ ] Actualizar la llave isCompleted de forma correcta
-- [ ] Permitir eliminar todos los items
-- [ ] Validar y enviar un mensaje más amistoso cuando se intenta borrar un item no existente
+- [x] Actualizar la llave isCompleted de forma correcta
+- [x] Permitir eliminar todos los items
+- [x] Validar y enviar un mensaje más amistoso cuando se intenta borrar un item no existente
 - [ ] Refactorizar el código
 - [ ] Agregar pruebas de unidad

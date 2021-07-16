@@ -37,6 +37,5 @@ public class ToDo {
     @NotBlank(message = "Description is mandatory")
     private String description;
 
-    @Value("true")
     private boolean isCompleted;
 }
