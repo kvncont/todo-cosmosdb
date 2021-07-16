@@ -64,17 +64,15 @@ public class ToDoController {
 
     @DeleteMapping(value = "/{toDoId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity deleteToDoById(@PathVariable String toDoId){
-        String message = "{\"message\": \"ToDo no se encuentra\"}";
+        String message = "{\"message\": \"No se encuentra el item\"}";
         HttpStatus status = HttpStatus.NOT_FOUND;
 
         Optional<ToDo> currentToDo = toDoRepository.findById(toDoId);
 
         if (!currentToDo.isEmpty()) {
-            System.out.println("Si Entro Inicio..........");
-            message = "{\"message\": \"ToDo borrado exitosamente\"}";
+            message = "{\"message\": \"Item borrado exitosamente\"}";
             toDoRepository.delete(currentToDo.get());
             status = HttpStatus.OK;
-            System.out.println("Si Entro Fin..........");
         }
 
         return new ResponseEntity(message, status);
