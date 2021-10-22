@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-deployment
+  labels:
+    app: todo
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: todo
+  template:
+    metadata:
+      labels:
+        app: todo
+    spec:
+      containers:
+      - name: todo
+        image: kvncont/todo:0.0.1
+        ports:
+        - containerPort: 8080
+        env:
+        - name: COSMOS_URI
+          valueFrom:
+            configMapKeyRef:
+              name: todo-configmap
+              key: cosmos_uri
+        - name: COSMOS_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: todo-configmap
+              key: cosmos_database
+        - name: COSMOS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: todo-secret
+              key: cosmos_key
+        resources:
+          requests:
+            memory: 200Mi
+            cpu: 200m
+          limits:
+            memory: 256Mi
+            cpu: 300m
